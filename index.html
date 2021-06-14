@@ -1,0 +1,886 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <title>360 immersive tour</title>
+</head>
+<header>
+    <!-- metereal player-->
+    <script src="https://stage.metareal.com/playersdk/playersdk.min.1.0.js"></script>
+    <!-- threejs -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.129.0/examples/js/controls/FirstPersonControls.js"></script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/renderers/CSS2DRenderer.js"></script>
+    <!-- bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <!-- required for qrcode-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"
+        integrity="sha512-pUhApVQtLbnpLtJn6DuzDD5o2xtmLJnJ7oBoMsBnzOkVkpqofGLGPaBJ6ayD2zQe3lCgCibhJBi4cj5wAxwVKA=="
+        crossorigin="anonymous"></script>
+
+
+    <!-- page style -->
+    <style>
+        .webapp {
+            border: 0;
+            /*display: inline;
+    background-color: rebeccapurple;*/
+
+           
+            /*
+             width: 512px;
+            height: 512px;
+             width: calc(80vw);
+            height: calc(80vh);
+            margin-left: calc(10vw);
+            margin-top: calc(10vh); 
+            position: absolute;
+            */
+        }
+
+        canvas {
+            /*
+            position: absolute;
+            pointer-events: none;
+            */
+            width: 512px;
+            height: 512px;
+        }
+
+        .label {
+            color: #FFF;
+            font-family: sans-serif;
+            padding: 2px;
+            background: rgba(0, 0, 0, .6);
+            font-size: small;
+        }
+
+        .spinner-grow {
+            display: inline-block;
+            width: 2rem;
+            height: 2rem;
+            vertical-align: -.125em;
+            background-color: currentColor;
+            border-radius: 50%;
+            opacity: 0;
+            -webkit-animation: 3s ease-in-out infinite spinner-grow;
+            animation: 3s ease-in-out infinite spinner-grow;
+            animation-name: spinner-grow;
+            animation-duration: 2s;
+            animation-timing-function: ease-in-out;
+            animation-delay: 0s;
+            animation-iteration-count: infinite;
+            animation-direction: normal;
+            animation-fill-mode: none;
+            animation-play-state: running;
+        }
+    </style>
+</header>
+<!-- html body -->
+
+<body class="bg-white container w-100">
+
+    <!-- header section -->
+    <nav class="navbar navbar-expand-md pt-2">
+        <a href="" class="navbar-brand">
+            <img src="./webfiles/vr4content.512.transparent.bg.png" alt="vr4content icon" width="25" height="25"
+                class="mb-2">
+            <h5 class="text-dark d-inline-block px-2">interactive virtual tour experience</h5>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-list"></i>
+        </button>
+
+        <div class="collapse navbar-collapse small justify-content-end" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link nav-item text-black-50" href="#how_to">how to use?</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-item text-black-50" href="#embed">embed code</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-item text-black-50" href="#about">about this web</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-item text-black-50" href="#contact">contact</a>
+                </li>
+            </ul>
+        </div>
+
+    </nav>
+
+
+
+    <div class="shadow bg-light mt-3 pb-3 text-center">
+        <img class="d-block mx-auto" src="./webfiles/360.svg"" alt="" width="128" height="128">
+        <h1 class="display-5 fw-bold">360 interactive tour</h1>
+        <div class="col-lg-6 mx-auto">
+          <p class="lead mb-4">This is a 3D virtual tour web experience with an extra layer of interactivity and
+            3d immersive spatial sound environment. Please use headphones!</p>
+            <a class="btn btn-outline-dark btn-lg" href="#contact">contact to know more</a>
+          <div class="d-grid gap-2 d-sm-flex justify-content-sm-center pt-3">
+            
+            <P class="mb-0 small">follow us:</P>
+            <div class="btn-group">
+                <button type="button" class="btn"><a target="_blank" class="text-dark"
+                        href="https://www.instagram.com/vr4content/"><i class="bi bi-instagram"></i></a></button>
+                <button type="button" class="btn"><a target="_blank" class="text-dark"
+                        href="https://www.youtube.com/channel/UC8KziANSHhEH-ctOw1bWSWA"><i
+                            class="bi bi-youtube"></i></a></button>
+                <button type="button" class="btn"><a target="_blank" class="text-dark"
+                        href="https://twitter.com/vr4content"><i class="bi bi-twitter"></i></a></button>
+                <button type="button" class="btn"><a target="_blank" class="text-dark"
+                        href="https://www.facebook.com/vr4content/"><i class="bi bi-facebook"></i></a></button>
+                <button type="button" class="btn"><a target="_blank" class="text-dark"
+                        href="https://www.linkedin.com/company/vr4content"><i
+                            class="bi bi-linkedin"></i></a></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="shadow bg-light mt-3 py-0 px-0">
+
+
+            <div class="col px-0" style="height: 50vh;">
+                    <!-- 360 content -->
+                    <div class="px-0 webapp container" id="myWebApp" style="height: 50vh;">
+                    </div>
+            </div>
+
+
+    </div>
+
+        <!-- how to use section -->
+
+    <div id="how_to" class="shadow bg-light mt-3 pb-3">
+            
+            <h5 class="text-start px-3 py-2 "><i class="bi bi-info-circle px-1"></i>how to use on your mobile?</h5>
+            <canvas id="qr" class="mb-3" style="max-height: 200px;max-width: 200px;margin: auto;display: block;"></canvas>
+
+            <script>
+                (function () {
+                    //remove anchor parameters from url
+                    var str = window.location.href;
+                    var index = str.lastIndexOf("/");
+                    var url = str.substr(0, index);
+                    var qr = new QRious({
+                        element: document.getElementById('qr'),
+                        size: 256,
+                        value: url
+                    });
+                })();
+            </script>
+
+            <div class="card-group text-center">
+                <div class="card bg-transparent border-0">
+                    <i class="bi bi-upc-scan" style="font-size: 3rem;"></i>
+                    <div class="card-body ">
+                        <p class="card-text text-start">1. Scan this QR code or write manually the actual url on your
+                            mobile
+                            browser.</p>
+                    </div>
+                </div>
+                <div class="card bg-transparent border-0">
+                    <i class="bi bi-phone-landscape" style="font-size: 3rem;"></i>
+                    <!-- <img src="./assets/ic_modelviewer.svg" alt="ar icon"
+                        class="pt-2 mx-auto d-block img-fluid card-img-top" style="width:64px"> -->
+                    <div class="card-body ">
+                        <p class="card-text text-start">2. go to full screen and navigate through the space (landscape recomended).
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+
+
+    <!-- contact section -->
+    <div id="contact" class="shadow bg-light mt-3">
+        <h5 class="text-start px-3 py-2"><i class="bi bi-person-circle px-1"></i>contact</h5>
+  
+        <div class="row">
+          <!-- left -->
+  
+  
+  
+          <!-- right -->
+          <div class="col-xl">
+            <div class="row mb-5">
+              <div class="col"><img src="./webfiles/vr4content.512.transparent.bg.png" alt="logo"
+                  class="img-fluid float-end" style="width:128px"></div>
+              <div class="col text-start">
+                <div class="btn-group-vertical">
+                  <a href="https://vr4content.com" target="_blank" class="btn text-start d-inline-block"
+                    aria-current="page"><i class="bi bi-globe d-inline-block"></i><small
+                      class="d-inline-block px-1">vr4content.com</small></a>
+                  <a class="btn text-start d-inline-block" aria-current="page"><i
+                      class="bi bi-telephone d-inline-block"></i><small class="d-inline-block px-1">+49
+                      1799678782</small></a>
+                  <a href="mailto:hello@vr4content.com" class="btn text-start d-inline-block" aria-current="page"><i
+                      class="bi bi-envelope d-inline-block"></i><small
+                      class="d-inline-block px-1">hello@vr4content.com</small></a>
+                  <a href="https://goo.gl/maps/Ci6wp939ieA4b8dz7" target="_blank" class="btn text-start d-inline-block"
+                    aria-current="page"><i class="bi bi-geo-alt d-inline-block"></i><small class="px-1">Lobeckstr. 36 co.
+                      Xailabs 10969 Berlin Germany</small></a>
+  
+                </div>
+  
+              </div>
+            </div>
+  
+  
+          </div>
+  
+          <!-- google maps
+          <div class="col">
+            <iframe loading="lazy"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2428.6396809488497!2d13.405530915806859!3d52.50376167981101!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x11ef03c0e5286233!2svr4content!5e0!3m2!1sen!2sde!4v1612784967739!5m2!1sen!2sde"
+              style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0" width="300" height="300"
+              frameborder="0"></iframe>
+          </div>
+          -->
+  
+        </div>
+      </div>
+
+
+
+    <!-- footer section -->
+    <footer class="text-black-50 mt-5">
+
+        <P class="mb-0 small">follow us for more content:</P>
+        <div class="btn-group">
+          <button type="button" class="btn"><a class="text-black-50" href="https://www.instagram.com/vr4content/"><i
+                class="bi bi-instagram"></i></a></button>
+          <button type="button" class="btn"><a class="text-black-50"
+              href="https://www.youtube.com/channel/UC8KziANSHhEH-ctOw1bWSWA"><i class="bi bi-youtube"></i></a></button>
+          <button type="button" class="btn"><a class="text-black-50" href="https://twitter.com/vr4content"><i
+                class="bi bi-twitter"></i></a></button>
+          <button type="button" class="btn"><a class="text-black-50" href="https://www.facebook.com/vr4content/"><i
+                class="bi bi-facebook"></i></a></button>
+          <button type="button" class="btn"><a class="text-black-50" href="https://www.linkedin.com/company/vr4content"><i
+                class="bi bi-linkedin"></i></a></button>
+        </div>
+        <p class="small">this is a web design powered by vr4content</p>
+      </footer>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">360 immersive tour</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container" id="modalContainer" style="max-height: 20vw;">
+                        <div class="row">
+                            <div class="col">
+                                <p class="text-start">This is an immersive interactive experience where you can navigate
+                                    through this virtual 360 tour.</p>
+                                <p class="text-start">Features</p>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <i class="bi bi-soundwave float-start px-3" style="font-size: 3em"></i>
+
+                            </div>
+                            <div class="col-auto">
+                                <p class="fw-bolder small">immersive audio</p>
+                                <p class="small">Experience the room as 3D audio spatialization.</p>
+                            </div>
+
+                        </div>
+                        <div class="row pt-3">
+                            <div class="col-2">
+                                <i class="bi bi-headphones float-start px-3" style="font-size: 3em"></i>
+
+                            </div>
+                            <div class="col-8">
+                                <p class="fw-bolder small">headphones recomended</p>
+                                <p class="small">For a full 360 audio experience we recomend to use headphones.</p>
+                            </div>
+                        </div>
+                        <div class="row pt-3">
+                            <div class="col-2">
+                                <i class="bi bi-messenger float-start px-3" style="font-size: 3em"></i>
+
+                            </div>
+                            <div class="col-8">
+                                <p class="fw-bolder small">private contact</p>
+                                <p class="small">Send a private message to us using the online messenger chat and
+                                    continue if you want using your phone app.</p>
+                            </div>
+                        </div>
+                        <div class="row pt-3">
+                            <div class="col-2">
+                                <i class="bi bi-chat float-start px-3" style="font-size: 3em"></i>
+                            </div>
+                            <div class="col-8">
+                                <p class="fw-bolder small">room chat</p>
+                                <p class="small">Communicate with other users inside the room. Share with others your
+                                    impression in the public room chat.</p>
+                            </div>
+                        </div>
+                        <div class="row pt-3">
+                            <div class="col-2">
+                                <i class="bi bi-headset-vr float-start px-3" style="font-size: 3em"></i>
+                            </div>
+                            <div class="col-8">
+                                <p class="fw-bolder small">VR headset</p>
+                                <p class="small">Use your favourite VR headset to have the real immersive experience.
+                                    Just visit this page using your headset browser.</p>
+                            </div>
+                        </div>
+
+                        <div class="row pt-3">
+                            <div class="col col-2">
+                                <i class="bi bi-phone float-start px-3" style="font-size: 3em"></i>
+
+                            </div>
+                            <div class="col-8">
+                                <p class="fw-bolder small">phone friendly</p>
+                                <p class="small">This experience has been designed thinking on mobile first.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Understood</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- metareal tour and ready event -->
+    <script lang="javascript">
+        // var myModalStatic = new bootstrap.Modal(document.getElementById("staticBackdrop"), {});
+
+
+
+        // Create the player that will be embedded inside myWebApp
+        var player = MetarealPlayerSDK.create("myWebApp");
+        //let tourURL = "https://tour.metareal.com/apps/player?asset=560ce2d0-e710-4d67-a6bf-463bf6dc6377";
+        let tourURL = "https://tour-de.metareal.com/apps/player?asset=a210e8ff-d4e2-4eb7-b7d8-9f6ea92877c2";
+        //let tourURL = "https://tour.metareal.com/apps/player?asset=e03d4699-8227-421c-89cb-d6007a26926e";
+
+
+        // Load the tour
+        player.load(tourURL, () => {
+            console.log("Tour is loaded");
+            myModalStatic.show();
+            player.startShowcase(true);
+            //setTimeout(initThreeJS, 10000);
+        });
+        player.setEventListener("ready", () => {
+            player.setViewMode("TOUR");
+            //initThreeJS();
+            /*
+            player.setViewMode("MODEL");
+            let camera = player.user.modelViewCamera;
+            let distanceWave = 0;
+           
+           
+
+            setInterval(() => {
+
+                // we animate the rotation around the Y axis to
+                // create the turn table effect
+                camera.orbitRotation.y += 0.3;
+
+                // we animated the distance between the camera
+                // and the point of interest so that we also have
+                // an animated dolly effect (getting close or far)
+                distanceWave += 0.001;
+                camera.distance = (Math.sin(distanceWave) * 0.01) + 7;
+
+                player.setModelViewCamera(
+                    camera.orbitRotation, // orbit rotation
+                    undefined, // look at position
+                    undefined, // Field of view
+                    camera.distance, // distance of the camera to the point of interest
+                );
+
+            }, 1000 / 60 );
+            */
+
+
+        });
+
+
+    </script>
+
+    <!-- sound -->
+    <script ang="javascript">
+
+
+        var listener = new THREE.AudioListener();
+        var audioLoader = new THREE.AudioLoader();
+
+        var sounds = [];
+        let sound1 = [];
+        sound1.filename = "street.mp3";
+        sound1.position = []
+        sound1.position.x = 1.4;
+        sound1.position.y = 1.6;
+        sound1.position.z = 1.1;
+        sound1.refDistance = 0.2;
+        sound1.volume = 0.5;
+
+        let sound2 = [];
+        sound2.filename = "tw.mp3";
+        sound2.position = []
+        sound2.position.x = -8.8;
+        sound2.position.y = 1.6;
+        sound2.position.z = -2.6;
+        sound2.refDistance = 0.5;
+        sound2.volume = 0.2;
+
+        let sound3 = [];
+        sound3.filename = "clock.mp3";
+        sound3.position = []
+        sound3.position.x = -5.8;
+        sound3.position.y = 1.6;
+        sound3.position.z = 1;
+        sound3.refDistance = 0.1;
+        sound3.volume = 1.2;
+
+        let sound4 = [];
+        sound4.filename = "flamingos.mp3";
+        sound4.position = []
+        sound4.position.x = -0.3;
+        sound4.position.y = 1.6;
+        sound4.position.z = 3.2;
+        sound4.refDistance = 0.05;
+        sound4.volume = 0.2;
+
+
+        let sound5 = [];
+        sound5.filename = "flaps.mp3";
+        sound5.position = []
+        sound5.position.x = -4.3;
+        sound5.position.y = 1.6;
+        sound5.position.z = 3.2;
+        sound5.refDistance = 0.06;
+        sound5.volume = 0.4;
+
+
+        function addSound(objectTransform, sound) {
+
+
+            var newSound = new THREE.PositionalAudio(listener);
+            audioLoader.load("./sounds/" + sound.filename, function (buffer) {
+                newSound.setBuffer(buffer);
+                newSound.setRefDistance(sound.refDistance);
+                newSound.setLoop(true);
+                newSound.setVolume(sound.volume);
+                newSound.play();
+                objectTransform.add(newSound);
+            });
+
+        }
+
+    </script>
+
+    <!-- threejs -->
+    <script>
+        var orbitCamera, metarealCamera, container, webGLrenderer, cssRenderer, scene, room, orbitControl, controls;
+        const clock = new THREE.Clock();
+
+        function getCSS2DLabel(entityObject) {
+            let elementDiv = document.createElement('div');
+            elementDiv.className = 'label';
+            elementDiv.style.marginTop = '-1em';
+
+            let elementUl = document.createElement('ul');
+            let elementLi = document.createElement('li');
+
+            elementLi.textContent = entityObject.type;
+            elementUl.appendChild(elementLi);
+
+            elementLi = document.createElement('li');
+            elementLi.textContent = entityObject.id.substring(0, 5);
+            elementUl.appendChild(elementLi);
+
+            elementLi = document.createElement('li');
+            elementLi.textContent = entityObject.position.x.toFixed(1) + "," + entityObject.position.y.toFixed(1) + "," + entityObject.position.z.toFixed(1);
+            elementUl.appendChild(elementLi);
+
+            elementLi = document.createElement('li');
+            elementLi.textContent = entityObject.rotation.x.toFixed(1) + "," + entityObject.rotation.y.toFixed(1) + "," + entityObject.rotation.z.toFixed(1);
+            elementUl.appendChild(elementLi);
+
+            elementDiv.append(elementUl);
+
+            return (new THREE.CSS2DObject(elementDiv));
+
+        }
+
+        function getCSS2DLabelObject(entityObject, id, type) {
+            let elementDiv = document.createElement('div');
+            elementDiv.className = 'label';
+            elementDiv.style.marginTop = '-1em';
+
+            let elementUl = document.createElement('ul');
+            let elementLi = document.createElement('li');
+
+            elementLi.textContent = type;
+            elementUl.appendChild(elementLi);
+
+            elementLi = document.createElement('li');
+            elementLi.textContent = id;
+            elementUl.appendChild(elementLi);
+
+            elementLi = document.createElement('li');
+            elementLi.textContent = entityObject.position.x.toFixed(1) + "," + entityObject.position.y.toFixed(1) + "," + entityObject.position.z.toFixed(1);
+            elementUl.appendChild(elementLi);
+
+            elementLi = document.createElement('li');
+            elementLi.textContent = entityObject.rotation.x.toFixed(1) + "," + entityObject.rotation.y.toFixed(1) + "," + entityObject.rotation.z.toFixed(1);
+            elementUl.appendChild(elementLi);
+
+            elementDiv.append(elementUl);
+
+            return (new THREE.CSS2DObject(elementDiv));
+
+        }
+
+        function getCSS102DMessengerLabel() {
+            //main div container
+            let elementDivContainer = document.createElement('div');
+            elementDivContainer.className = 'container';
+            elementDivContainer.style = "width: 511px; height: 512px;";
+            elementDivContainer.id = 'messengerLabel';
+
+            //row
+            let elementDivRow = document.createElement('div');
+            elementDivRow.className = 'row align-items-center top-50';
+            elementDivRow.style = 'margin-top: 50%';
+
+
+            //col
+            let elementDivCol = document.createElement('div');
+            elementDivCol.className = 'col position-relative';
+
+            //grow effect
+            let elementGrow = document.createElement('div');
+            elementGrow.className = "spinner-grow position-absolute top-50 start-50 translate-middle";
+            elementGrow.style = "width: 5rem; height: 5rem;";
+            elementGrow.setAttribute("role", "status");
+
+            //messenger icon
+            let elementIcon = document.createElement('i');
+            elementIcon.className = "bi bi-messenger position-absolute top-50 start-50 translate-middle";
+            elementIcon.style = "font-size: 2rem; color: white;";
+
+            //composition
+
+            elementDivCol.appendChild(elementGrow);
+            elementDivCol.appendChild(elementIcon);
+            elementDivRow.appendChild(elementDivCol);
+
+            elementDivContainer.appendChild(elementDivRow);
+
+            return (new THREE.CSS2DObject(elementDivContainer));
+
+        }
+
+        function getDiscordContent() {
+            let iframe = document.createElement('iframe');
+            iframe.src = "https://discordapp.com/widget?id=843080606379802694&theme=dark";
+            iframe.width = "350";
+            iframe.height = "350";
+            iframe.allowtransparency = "true";
+            iframe.frameBorder = "0";
+            iframe.sandbox = "allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts";
+            //<iframe src="https://discordapp.com/widget?id=843080606379802694&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox=></iframe>
+            return (new THREE.CSS2DObject(iframe));
+        }
+
+        function getCSS2DCameraLabel(entityObject) {
+            let elementDiv = document.createElement('div');
+            elementDiv.className = 'label';
+            elementDiv.style.marginTop = '-1em';
+
+            let elementUl = document.createElement('ul');
+            let elementLi = document.createElement('li');
+
+            elementLi.textContent = "camera";
+            elementUl.appendChild(elementLi);
+
+            elementLi = document.createElement('li');
+            elementLi.id = "cameraPanorama";
+            elementLi.textContent = "panorama:";
+            elementUl.appendChild(elementLi);
+
+            elementLi = document.createElement('li');
+            elementLi.id = "cameraPosition";
+            elementLi.textContent = entityObject.position.x.toFixed(1) + "," + entityObject.position.y.toFixed(1) + "," + entityObject.position.z.toFixed(1);
+            elementUl.appendChild(elementLi);
+
+            elementLi = document.createElement('li');
+            elementLi.id = "cameraRotation";
+            elementLi.textContent = entityObject.rotation.x.toFixed(1) + "," + entityObject.rotation.y.toFixed(1) + "," + entityObject.rotation.z.toFixed(1);
+            elementUl.appendChild(elementLi);
+
+            elementDiv.append(elementUl);
+
+            return (new THREE.CSS2DObject(elementDiv));
+
+
+        }
+
+        function initThreeJS() {
+
+            //Scene and room
+            room = new THREE.Object3D();
+            scene = new THREE.Scene();
+            scene.background = null;
+
+            //dev helper
+            const polarGridHelper = new THREE.PolarGridHelper(10, 32, 16, 32, 0x0000ff, 0x808080);
+            polarGridHelper.position.x = 0;
+            polarGridHelper.position.y = 0;
+            polarGridHelper.position.z = 0;
+            room.add(polarGridHelper);
+
+            //cameras
+            // orbitCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            metarealCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            var cameraAddon = new THREE.Mesh(
+                new THREE.SphereGeometry(0.1, 16, 8),
+                new THREE.MeshBasicMaterial({ color: 0xff0000 })
+            );
+            cameraAddon.add(new THREE.AxesHelper(1));
+
+            metarealCamera.add(cameraAddon);
+            metarealCamera.add(getCSS2DCameraLabel(player.user))
+            metarealCamera.add(listener);
+            scene.add(metarealCamera);
+
+            //renderers
+            container = document.getElementById('myWebApp');
+            webGLrenderer = new THREE.WebGLRenderer({ alpha: true });
+            webGLrenderer.toneMapping = THREE.ACESFilmicToneMapping;
+            webGLrenderer.outputEncoding = THREE.sRGBEncoding;
+            webGLrenderer.physicallyCorrectLights = true;
+            webGLrenderer.shadowMap.enabled = true;
+            webGLrenderer.setSize(container.clientWidth, container.clientHeight);
+            cssRenderer = new THREE.CSS2DRenderer();
+            cssRenderer.setSize(container.clientWidth, container.clientHeight);
+            cssRenderer.domElement.style.position = 'absolute';
+            cssRenderer.domElement.style["pointer-events"] = "none";
+            cssRenderer.domElement.style.top = '0px';
+
+            container.insertBefore(webGLrenderer.domElement, container.firstChild);
+            container.insertBefore(cssRenderer.domElement, container.firstChild);
+
+            //orbit control helper
+            // orbitControl = new THREE.OrbitControls(orbitCamera, webGLrenderer.domElement);
+            // orbitControl.enableDamping = true;
+            // orbitControl.dampingFactor = 0.05;
+            // orbitControl.screenSpacePanning = false;
+            // orbitControl.minDistance = 1;
+            // orbitControl.maxDistance = 50;
+            // orbitControl.maxPolarAngle = Math.PI / 2;
+
+            controls = new THREE.FirstPersonControls(metarealCamera, webGLrenderer.domElement);
+            controls.movementSpeed = 10;
+            controls.lookSpeed = 0.01;
+
+            function addRandomColorCube(position, rotation) {
+
+                const material = new THREE.MeshBasicMaterial();
+                material.color.setHex(Math.random() * 0xffffff);
+                const cube = new THREE.Mesh(new THREE.BoxGeometry(), material);
+                cube.position.x = position.x;
+                cube.position.y = position.y;
+                cube.position.z = position.z;
+                cube.rotation.x = rotation.x;
+                cube.rotation.y = rotation.y;
+                cube.rotation.z = rotation.z;
+                cube.scale.x = 0.3;
+                cube.scale.y = 0.3;
+                cube.scale.z = 0.3;
+                room.add(cube);
+            }
+
+            function addExtraContent(sound) {
+                extraObject = new THREE.Object3D();
+                //add sphere
+                const material = new THREE.MeshBasicMaterial();
+                material.color.setHex(Math.random() * 0xffffff);
+                const sphere = new THREE.Mesh(new THREE.SphereGeometry(), material);
+                sphere.scale.x = 0.05;
+                sphere.scale.y = 0.05;
+                sphere.scale.z = 0.05;
+                extraObject.add(sphere);
+
+                extraObject.position.x = sound.position.x;
+                extraObject.position.y = sound.position.y;
+                extraObject.position.z = sound.position.z;
+                extraObject.rotation.x = 0;
+                extraObject.rotation.y = 0;
+                extraObject.rotation.z = 0;
+
+                //extraObject.add(getDiscordContent());
+                //extraObject.add(getCSS2DMessengerLabel());
+
+                room.add(extraObject);
+
+            }
+
+
+            function add3DSound(soundToAdd) {
+
+                let transform = new THREE.Object3D();
+                //helper
+                transform.add(new THREE.AxesHelper(1));
+                //position
+                transform.position.x = soundToAdd.position.x;
+                transform.position.y = soundToAdd.position.y;
+                transform.position.z = soundToAdd.position.z;
+                //rotation
+                transform.rotation.x = 0;
+                transform.rotation.y = 0;
+                transform.rotation.z = 0;
+                //default height offset
+                //emptyTransform.position.y+=1.5;
+                //additional offset
+                addSound(transform, soundToAdd);
+                //addLabel(objectToCopy, transform);
+                room.add(transform);
+
+
+            }
+
+            //for each panorama
+            for (let index in this.player.tour.panoramas) {
+                let label3Dtransform = new THREE.Object3D();
+                label3Dtransform.position.x = player.tour.panoramas[index].position.x;
+                label3Dtransform.position.y = player.tour.panoramas[index].position.y;
+                label3Dtransform.position.z = player.tour.panoramas[index].position.z;
+                label3Dtransform.rotation.x = player.tour.panoramas[index].rotation.x;
+                label3Dtransform.rotation.y = player.tour.panoramas[index].rotation.y;
+                label3Dtransform.rotation.z = player.tour.panoramas[index].rotation.z;
+                label3Dtransform.add(getCSS2DLabel(player.tour.panoramas[index]));
+                room.add(label3Dtransform);
+                addRandomColorCube(player.tour.panoramas[index].position, player.tour.panoramas[index].rotation)
+            }
+
+
+            //for each room
+            for (let index in this.player.tour.rooms) {
+
+                let label3Dtransform = new THREE.Object3D();
+                label3Dtransform.position.x = player.tour.rooms[index].position.x;
+                label3Dtransform.position.y = player.tour.rooms[index].position.y;
+                label3Dtransform.position.z = player.tour.rooms[index].position.z;
+                label3Dtransform.rotation.x = player.tour.rooms[index].rotation.x;
+                label3Dtransform.rotation.y = player.tour.rooms[index].rotation.y;
+                label3Dtransform.rotation.z = player.tour.rooms[index].rotation.z;
+                label3Dtransform.add(getCSS2DLabel(player.tour.rooms[index]));
+                scene.add(label3Dtransform);
+
+            }
+
+            //add extra layer of content
+            add3DSound(sound1);
+            add3DSound(sound2);
+            add3DSound(sound3);
+            add3DSound(sound4);
+            add3DSound(sound5);
+            //addExtraContent(sound4);
+
+
+            //add room and update position rotation
+            scene.add(room);
+            room.position.x = player.tour.rooms[0].position.x;
+            room.position.y = player.tour.rooms[0].position.y;
+            room.position.z = player.tour.rooms[0].position.z;
+            room.rotation.x = player.tour.rooms[0].rotation.x;
+            room.rotation.y = player.tour.rooms[0].rotation.y;
+            room.rotation.z = player.tour.rooms[0].rotation.z;
+
+            room.rotation.y = 89.5;
+
+            //room.position.x += player.tour.buildings[0].position.x;
+            //room.position.y += player.tour.buildings[0].position.y;
+            //room.position.z += player.tour.buildings[0].position.z;
+            //update orbit camera (dev)
+            //orbitControl.target.set(player.tour.rooms[0].position.x, player.tour.rooms[0].position.y, player.tour.rooms[0].position.z);
+
+            //start unpdate loop
+            Animate();
+        }
+
+        function Animate() {
+
+            if (metarealCamera.fov != player.user.fov) {
+                metarealCamera.fov = player.user.fov;
+                metarealCamera.updateProjectionMatrix();
+            }
+
+            controls.update(clock.getDelta());
+
+            //metarealCamera.position.x = player.user.position.x; -player.tour.buildings[0].position.x -player.tour.rooms[0].position.x;
+            //metarealCamera.position.y = player.user.position.y;- player.tour.buildings[0].position.y -player.tour.rooms[0].position.y;
+            //metarealCamera.position.z = player.user.position.z;- player.tour.buildings[0].position.z -player.tour.rooms[0].position.z;
+
+            //metarealCamera.rotation.x = player.user.rotation.x ;
+            //metarealCamera.rotation.y = player.user.rotation.y ;
+            //metarealCamera.rotation.z = player.user.rotation.z ;
+
+            try {
+                document.getElementById("cameraPosition").textContent = player.user.position.x.toFixed(1) + "," + player.user.position.y.toFixed(1) + "," + player.user.position.z.toFixed(1);
+                document.getElementById("cameraRotation").textContent = player.user.rotation.x.toFixed(1) + "," + player.user.rotation.y.toFixed(1) + "," + player.user.rotation.z.toFixed(1);
+                document.getElementById("cameraPanorama").textContent = player.user.location.panorama.id.substring(0, 5);
+
+            } catch (error) {
+
+            }
+            // to view with orbit camera
+            //webGLrenderer.render(scene, orbitCamera);
+            //cssRenderer.render(scene, orbitCamera);
+
+            //orbitControl.update();
+
+
+            //to view with metareal camera
+            webGLrenderer.render(scene, metarealCamera);
+            cssRenderer.render(scene, metarealCamera);
+            requestAnimationFrame(Animate);
+        }
+
+    </script>
+
+</body>
+
+
+
+</html>
