@@ -1,1 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
 
+<head>
+  <!-- Required meta tags for bootstrap-->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Required for favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="./webfiles/apple-touch-icon.png">
+  <link rel="apple-touch-startup-image" href="./webfiles/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./webfiles/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./webfiles/favicon-16x16.png">
+  <link rel="manifest" href="./manifest.webmanifest">
+  
+  <!-- required for ios wpa-->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="vr4content webApp" />
+  <meta name="description" content="vr4cotent PWA for AR" />
+  <meta name="theme-color" content="#AAAAAA" />
+  
+
+
+  <!-- bootstrap css-->
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+  <!-- required icons for bootstrap-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+
+</head>
+
+<body class="text-center bg-white">
+
+
+  <div class="container w-100">
+
+    <!-- header section -->
+    <nav class="navbar navbar-expand-md pt-2">
+      <a href="" class="navbar-brand">
+        <img src="./webfiles/vr4content.512.transparent.bg.png" alt="vr4content icon" width="25" height="25" class="mb-2">
+        <h5 class="text-dark d-inline-block px-2">Web AR experience</h5>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="bi bi-list"></i>
+      </button>
+    
+        <div class="collapse navbar-collapse small justify-content-end" id="navbarSupportedContent">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link nav-item text-black-50" href="#how_to">how to use?</a>    
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav-item text-black-50" href="#embed">embed code</a>   
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav-item text-black-50" href="#about">about this web</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav-item text-black-50" href="#contact">contact</a>
+            </li>
+          </ul>
+        </div>
+    
+    </nav>
+
+    <!-- main section -->
+    <div class="shadow bg-light">
+      
+      <div class="row px-3 py-2">
+        
+        <!-- left side content -->
+        <div class="col">
+          <i class="bi bi-phone" style="font-size: 2rem"></i>
+          <h4 class="text-start"></i>title</h4>
+
+          <p class="text-start ">Here you can see how it looks your 3D model integrated on the webpage, however, this is a web AR experience made for mobiles phones. To bring this 3D model to your environment visit this page with your mobile web browser.</p>
+         
+         
+        </div>
+        <!-- right side content   -->
+        <div class="col">
+
+         
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- how to use section -->
+
+    <div id="how_to" class="shadow bg-light mt-3 pb-3">
+      <h5 class="text-start px-3 py-2 "><i class="bi bi-info-circle px-1"></i>how to use?</h5>
+      <canvas id="qr" class="mb-3"></canvas>
+
+      <script>
+        (function () {
+          //remove anchor parameters from url
+          var str = window.location.href;
+          var index = str.lastIndexOf("/");
+          var url = str.substr(0,index);
+          var qr = new QRious({
+            element: document.getElementById('qr'),
+            size: 256,
+            value: url
+          });
+        })();
+      </script>
+
+      <div class="card-group">
+        <div class="card bg-transparent border-0">
+          <i class="bi bi-upc-scan" style="font-size: 3rem;"></i>
+          <div class="card-body ">
+            <p class="card-text text-start">1. Scan this QR code or write manually the actual url on your mobile
+              browser.</p>
+          </div>
+        </div>
+        <div class="card bg-transparent border-0">
+          <img src="./assets/ic_modelviewer.svg" alt="ar icon" class="pt-2 mx-auto d-block img-fluid card-img-top"
+            style="width:64px">
+          <div class="card-body ">
+            <p class="card-text text-start">2. Click on the icon over the 3d model to bring the object to your space.
+            </p>
+          </div>
+        </div>
+
+
+        <div class="card bg-transparent border-0">
+          <img src="./assets/hand.png" alt="ar icon" class="pt-1 mx-auto d-block img-fluid card-img-top"
+            style="width:62px">
+          <div class="card-body ">
+            <p class="card-text text-start">3. Move your mobile around to scan your surroundings and place your 3d
+              model.</p>
+          </div>
+        </div>
+
+        <div class="card bg-transparent border-0">
+          <img src="./assets/mobileshare.svg" alt="mobile share" class="pt-2 mx-auto d-block img-fluid card-img-top"
+            style="width:62px">
+          <div class="card-body ">
+            <p class="card-text text-start">4. Record a video or take pictures from your experiences to share with
+              others.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- embed section -->
+
+    <div id="embed" class="shadow bg-light mt-3 pb-3">
+      <h5 class="text-start px-3 py-2"><i class="bi bi-code-square px-1"></i>embed code</h5>
+
+      <div class="row">
+        <div class="col px-4">
+          <p class="text-start">Copy and paste this embed code on to your web editor to bring this 3d ar experience to
+            any web page</p>
+          <textarea class="form-control mb-2 text-start" id="codeTextArea" rows="3"><iframe src=""></iframe>
+          </textarea>
+          <button onclick="copyTextToClipboard()" class="btn btn-outline-secondary float-end btn-sm" type="button"
+            id="button-addon2">copy</button>
+
+
+        </div>
+
+      </div>
+    </div>
+    <script>
+      function getFrameUrl() {
+        var str = window.location.href;
+        var index = str.lastIndexOf("/");
+        return str.substr(0,index)+"/frame.html";
+      }
+      
+      function getEmbedCode() {
+        return '<iframe src="' + getFrameUrl() + '" allow="xr xr-spatial-tracking" scrolling="no" frameborder="0" style="height: 100%; width: 100%; border: 0;"></iframe>'
+      }
+      
+      function copyTextToClipboard() {
+        var text = getEmbedCode();
+        navigator.clipboard.writeText(text).then(function () {
+          console.log('Async: Copying to clipboard was successful!');
+        }, function (err) {
+          console.error('Async: Could not copy text: ', err);
+        });
+      }
+      document.getElementById("codeTextArea").innerHTML = getEmbedCode();
+    </script>
+
+    <!-- about this web -->
+    <div id="about" class="shadow bg-light mt-5 pb-3">
+      <h5 class="text-start px-3 py-2"><i class="bi bi-search px-1"></i>more about this experience</h5>
+      <div class="card-group mx-3">
+        <!-- card -->
+        <div class="card bg-transparent border-0 mt-4">
+          <i class="bi bi-phone" style="font-size: 3rem;"></i>
+          <p class="small fw-bold">WPA</p>
+          <div class="card-body ">
+            <p class="card-text text-start small">This is not only a web, it's also an app (web progressive app). You can install it on your device and it will work even with no internet connection.</p>
+          </div>
+          <div class="card-footer bg-transparent border-0">
+            <a class="btn btn-sm btn-dark bg-light text-dark" href="https://web.dev/progressive-web-apps/" target="_blank">+ info</a>
+          </div>
+        </div>
+        <!-- card -->
+        <div class="card bg-transparent border-0 mt-4">
+          <i class="bi bi-bootstrap" style="font-size: 3rem;"></i>
+          <p class="small fw-bold">Bootstrap</p>
+            <div class="card-body ">
+            <p class="card-text text-start small">This web is using Bootstrap and other components to ensure a smooth and high quality resposive experience.</p>
+          </div>
+            <div class="card-footer bg-transparent border-0">
+              <a class="cardlink btn btn-sm btn-dark bg-light text-dark" href="https://getbootstrap.com/" target="_blank">+ info</a>
+            </div>
+        </div>
+        <!-- card -->
+        <div class="card bg-transparent border-0 mt-4">
+          <i class="bi bi-github" style="font-size: 3rem;"></i>
+          <p class="small fw-bold">GitHub</p>
+          <div class="card-body ">
+            <p class="card-text text-start small">This web is self hosted in using github pages. If you need to customize this web or to have access please contact us.</p>
+          </div>
+          <div class="card-footer bg-transparent border-0 mt-3">
+            <a class="cardlink btn btn-sm btn-dark bg-light text-dark" href="mailto:info@vr4content.com" target="_blank">send email</a>
+          </div>
+        </div>
+        <!-- card -->
+        <div class="card bg-transparent border-0 mt-4">
+          <i class="bi bi-server" style="font-size: 3rem;"></i>
+          <p class="small fw-bold">Static Web</p>
+          <div class="card-body ">
+            <p class="card-text text-start small">This is a static web page. It means that here is no server side activity, database or any type of data tracking.</p>
+          </div>
+          <div class="card-footer bg-transparent border-0">
+            <a class="cardlink btn btn-sm btn-dark bg-light text-dark" href="https://getbootstrap.com/" target="_blank">+ info</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- contact section -->
+    <div id="contact" class="shadow bg-light mt-3">
+      <h5 class="text-start px-3 py-2"><i class="bi bi-person-circle px-1"></i>contact</h5>
+
+      <div class="row">
+        <!-- left -->
+
+
+
+        <!-- right -->
+        <div class="col-xl">
+          <div class="row mb-5">
+            <div class="col"><img src="./webfiles/vr4content.512.transparent.bg.png" alt="logo"
+                class="img-fluid float-end" style="width:128px"></div>
+            <div class="col text-start">
+              <div class="btn-group-vertical">
+                <a href="https://vr4content.com" target="_blank" class="btn text-start d-inline-block"
+                  aria-current="page"><i class="bi bi-globe d-inline-block"></i><small
+                    class="d-inline-block px-1">vr4content.com</small></a>
+                <a class="btn text-start d-inline-block" aria-current="page"><i
+                    class="bi bi-telephone d-inline-block"></i><small class="d-inline-block px-1">+49
+                    1799678782</small></a>
+                <a href="mailto:hello@vr4content.com" class="btn text-start d-inline-block" aria-current="page"><i
+                    class="bi bi-envelope d-inline-block"></i><small
+                    class="d-inline-block px-1">hello@vr4content.com</small></a>
+                <a href="https://goo.gl/maps/Ci6wp939ieA4b8dz7" target="_blank" class="btn text-start d-inline-block"
+                  aria-current="page"><i class="bi bi-geo-alt d-inline-block"></i><small class="px-1">Lobeckstr. 36 co.
+                    Xailabs 10969 Berlin Germany</small></a>
+
+              </div>
+
+            </div>
+          </div>
+
+
+        </div>
+
+        <!-- google maps
+        <div class="col">
+          <iframe loading="lazy"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2428.6396809488497!2d13.405530915806859!3d52.50376167981101!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x11ef03c0e5286233!2svr4content!5e0!3m2!1sen!2sde!4v1612784967739!5m2!1sen!2sde"
+            style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0" width="300" height="300"
+            frameborder="0"></iframe>
+        </div>
+        -->
+
+      </div>
+    </div>
+
+
+    <!-- footer section -->
+    <footer class="text-black-50 mt-5">
+
+      <P class="mb-0 small">follow us for more content:</P>
+      <div class="btn-group">
+        <button type="button" class="btn"><a class="text-black-50" href="https://www.instagram.com/vr4content/"><i
+              class="bi bi-instagram"></i></a></button>
+        <button type="button" class="btn"><a class="text-black-50"
+            href="https://www.youtube.com/channel/UC8KziANSHhEH-ctOw1bWSWA"><i class="bi bi-youtube"></i></a></button>
+        <button type="button" class="btn"><a class="text-black-50" href="https://twitter.com/vr4content"><i
+              class="bi bi-twitter"></i></a></button>
+        <button type="button" class="btn"><a class="text-black-50" href="https://www.facebook.com/vr4content/"><i
+              class="bi bi-facebook"></i></a></button>
+        <button type="button" class="btn"><a class="text-black-50" href="https://www.linkedin.com/company/vr4content"><i
+              class="bi bi-linkedin"></i></a></button>
+      </div>
+      <p class="small">this is a web design powered by vr4content.com</p>
+    </footer>
+  </div>
+  
+<!--popup modal on ios for web app installation-->
+<div id="iosWebAppModal" class="modal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Web App avialable to install</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-start">
+        <style type="text/css">
+        .blueicon{ 
+            color: #0d6efd;
+            font-size: 2em;
+            }
+        .grayicon{
+            color: #777777;
+            font-size: 2em;
+            }
+        </style>
+        <ul class="list-group">
+          <li class="list-inline-item"> <i class="bi bi-box-arrow-up blueicon"></i> tap on share button</li>
+          <li class="list-inline-item"> <i class="bi bi-plus-square-fill grayicon"></i> select Add to Home Screen</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+   
+   
+   
+</div>
+
+
+  <!-- bootstrap bundle-->
+  <!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  <!-- service worker-->
+  
+  <script>
+  // Check that service workers are supported
+  if ('serviceWorker' in navigator) {
+    // Use the window load event to keep the page load performant
+    window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js');
+    });
+  }
+  //This is not working on some ipads
+  var _isIOS = !window.MSStream && /iPad|iPhone|iPod/.test(navigator.userAgent);
+  var _isIOSSafari = !!window.navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
+  if (_isIOS || _isIOSSafari) {
+      var iosModal = new bootstrap.Modal(document.getElementById('iosWebAppModal'), {keyboard: false});
+      iosModal.show();
+    }
+    
+   
+    </script>
+  
+  </body>
+
+</html>
